@@ -24,18 +24,15 @@ int isValid(int k) {
     return 1;
 }
 
-void NextValue(int k) {
-    while (1) {
-        x[k] = (x[k] % n) + 1;
-        if (x[k] == 0)
-            return;
-
+void Hamiltonian(int k) {
+    for (int v = 2; v <= n; v++) { // Try vertices 2 to n (since 1 is fixed at x[1])
+        x[k] = v;
         if (isValid(k)) {
             if (k == n) {
-                if (G[x[n]][x[1]] != 0)
+                if (G[x[n]][x[1]] != 0) // Check if cycle is possible
                     write();
             } else {
-                NextValue(k + 1);
+                Hamiltonian(k + 1);
             }
         }
     }
@@ -56,9 +53,9 @@ int main() {
         x[i] = 0;
     }
 
-    x[1] = 1; // Starting vertex is 1
+    x[1] = 1; // Start from vertex 1
     printf("\nHamiltonian cycles:\n");
-    NextValue(2);
+    Hamiltonian(2);
 
     return 0;
 }
